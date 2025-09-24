@@ -15,3 +15,15 @@ export class SendPromotionEmailEvent extends VendureEvent {
     super();
   }
 }
+
+export class RegisteringAccountEvent extends VendureEvent {
+  constructor(
+    public email: string,
+    public ctx: RequestContext,
+    public subject: string,
+    public name: string,
+    public languageCode: LanguageCode,
+  ) {
+    super();
+  }
+}

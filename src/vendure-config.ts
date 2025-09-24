@@ -12,7 +12,7 @@ import { GraphiqlPlugin } from '@vendure/graphiql-plugin';
 import 'dotenv/config';
 import path from 'path';
 import { MyPlugin } from './plugins/promotion-mail/promotion-mail.plugin';
-import { promotionEmailListener } from './plugins/promotion-mail/events/handler';
+import { accountRegestrationEvent, promotionEmailListener } from './plugins/promotion-mail/events/handler';
 
 const IS_DEV = process.env.APP_ENV === 'dev';
 const serverPort = +process.env.PORT || 3000;
@@ -73,7 +73,7 @@ export const config: VendureConfig = {
       devMode: true,
       outputPath: path.join(__dirname, '../static/email/test-emails'),
       route: 'mailbox',
-      handlers: [...defaultEmailHandlers, promotionEmailListener],
+      handlers: [...defaultEmailHandlers, promotionEmailListener, accountRegestrationEvent],
       templateLoader: new FileBasedTemplateLoader(path.join(__dirname, '../static/email/templates')),
       globalTemplateVars: {
         // The following variables will change depending on your storefront implementation.

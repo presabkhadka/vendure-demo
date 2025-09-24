@@ -1,6 +1,6 @@
 import { EmailEventListener } from "@vendure/email-plugin";
-import { SendPromotionEmailEvent } from "./custom-event";
-import { LanguageCode } from "@vendure/core";
+import { RegisteringAccountEvent, SendPromotionEmailEvent } from "./custom-event";
+import { AccountRegistrationEvent, LanguageCode } from "@vendure/core";
 
 export const promotionEmailListener = new EmailEventListener('promotion-email')
   .on(SendPromotionEmailEvent)
@@ -15,4 +15,18 @@ export const promotionEmailListener = new EmailEventListener('promotion-email')
     ends_at: event.ends_at,
     cupon_code: event.coupon_code,
     subject: event.subject,
+  }));
+
+export const accountRegestrationEvent = new EmailEventListener('account-regestration')
+  .on(RegisteringAccountEvent)
+  .setFrom('abc@gmail.com')
+  .setLanguageCode(event => event.languageCode as LanguageCode)
+
+  .setRecipient(event => event.email)
+  .setSubject(` {{ subject }}`)
+  .setTemplateVars(event => ({
+    name: event.name,
+    subject: event.subject,
+    LanguageCode: event.languageCode
+
   }));
